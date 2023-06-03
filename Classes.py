@@ -13,7 +13,7 @@ with them:
 "bowtie" = 4
 "monocle" = 5
 Everything else has 0 points.
-Use the test cases below to guide you! change"""
+Use the test cases below to guide you! change something"""
 
 
 class Classy(object):
