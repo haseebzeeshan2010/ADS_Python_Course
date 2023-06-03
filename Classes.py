@@ -34,7 +34,7 @@ class Classy(object):
                 classiness += 5
         return classiness
 
-
+#test change
 # Test cases
 me = Classy()
 
