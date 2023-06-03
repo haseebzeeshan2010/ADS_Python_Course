@@ -13,15 +13,16 @@ with them:
 "bowtie" = 4
 "monocle" = 5
 Everything else has 0 points.
-Use the test cases below to guide you!"""
+Use the test cases below to guide you! change"""
+
 
 class Classy(object):
     def __init__(self):
         self.items = []
-        
-    def addItem(self,item):
+
+    def addItem(self, item):
         self.items.append(item)
-        
+
     def getClassiness(self):
         classiness = 0
         for i in self.items:
@@ -32,23 +33,24 @@ class Classy(object):
             elif i == "monocle":
                 classiness += 5
         return classiness
-    
+
+
 # Test cases
 me = Classy()
 
 # Should be 0
-print (me.getClassiness())
+print(me.getClassiness())
 
 me.addItem("tophat")
 # Should be 2
-print (me.getClassiness())
+print(me.getClassiness())
 
 me.addItem("bowtie")
 me.addItem("jacket")
 me.addItem("monocle")
 # Should be 11
-print (me.getClassiness())
+print(me.getClassiness())
 
 me.addItem("bowtie")
 # Should be 15
-print (me.getClassiness())
+print(me.getClassiness())
