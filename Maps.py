@@ -30,6 +30,11 @@ American City
 2
 Asian City - Country
 Asian City - Country"""
+print(1)
+usa_cities = sorted(locations['North America']['USA'])
+for city in usa_cities:
+    print(city)
+
 
 
 
