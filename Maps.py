@@ -15,7 +15,7 @@ Atlanta (USA, North America)
 Cairo (Egypt, Africa)
 Shanghai (China, Asia)"""
 
-locations = {'North America': {'USA': ['Mountain View']}}
+locations = {'North America': {'USA': ['Mountain View', 'Atlanta']}, 'Asia': {'India': ['Bangalore'], 'China': ['Shanghai']}, 'Africa': {'Egypt': ['Cairo']}}
 
 """Print the following (using "print").
 1. A list of all cities in the USA in
