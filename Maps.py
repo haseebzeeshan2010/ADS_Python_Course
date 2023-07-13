@@ -35,7 +35,11 @@ usa_cities = sorted(locations['North America']['USA'])
 for city in usa_cities:
     print(city)
 
-
-
-
-
+print(2)
+asia_cities = []
+for country, cities in locations['Asia'].items():
+    for city in cities:
+        asia_cities.append(f"{city} - {country}")
+asia_cities = sorted(asia_cities)
+for city in asia_cities:
+    print(city)
