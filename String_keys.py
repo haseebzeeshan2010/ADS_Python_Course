@@ -36,11 +36,11 @@ hash_table = HashTable()
 
 # Test calculate_hash_value
 # Should be 8568
-print hash_table.calculate_hash_value('UDACITY')
+print(hash_table.calculate_hash_value('UDACITY'))
 
 # Test lookup edge case
 # Should be -1
-print hash_table.lookup('UDACITY')
+print(hash_table.lookup('UDACITY'))
 
 # Test store
 hash_table.store('UDACITY')
