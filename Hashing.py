@@ -14,3 +14,6 @@ print(hash_map["banana"])  # Output: 2
 hash_map["apple"] = 5
 print(hash_map["apple"])  # Output: 5
 
+# Remove a key-value pair
+del hash_map["cherry"]
+print(hash_map)  # Output: {'apple': 5, 'banana': 2}
