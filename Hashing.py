@@ -9,3 +9,8 @@ hash_map["cherry"] = 3
 # Access values using keys
 print(hash_map["apple"])  # Output: 1
 print(hash_map["banana"])  # Output: 2
+
+# Update values
+hash_map["apple"] = 5
+print(hash_map["apple"])  # Output: 5
+
