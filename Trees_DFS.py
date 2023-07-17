@@ -20,3 +20,4 @@ def dfs(node):
 
 print("DFS traversal:")
 dfs(root)
+print()

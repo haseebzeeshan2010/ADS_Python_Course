@@ -33,3 +33,4 @@ def bfs(node):
 
 print("BFS traversal:")
 bfs(root)
+print()
