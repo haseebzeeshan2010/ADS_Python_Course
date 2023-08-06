@@ -10,7 +10,8 @@ class RedBlackTree:
     def __init__(self):
         self.nil = Node(None)
         self.root = self.nil
-
+    
+    #insert function
     def insert(self, key):
         node = Node(key)
         node.left = self.nil
@@ -39,6 +40,7 @@ class RedBlackTree:
         node.color = 0
         self.insert_fixup(node)
 
+    #function for fixing insertion of nodes
     def insert_fixup(self, node):
         while node.parent.color == 0:
             if node.parent == node.parent.parent.left:
@@ -74,6 +76,7 @@ class RedBlackTree:
 
         self.root.color = 1
 
+    #performs left rotations
     def left_rotate(self, node):
         y = node.right
         node.right = y.left
@@ -93,6 +96,7 @@ class RedBlackTree:
         y.left = node
         node.parent = y
 
+    #performs right rotations
     def right_rotate(self, node):
         y = node.left
         node.left = y.right
