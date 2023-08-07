@@ -4,14 +4,14 @@ class Node:
         self.left = None
         self.right = None
         self.parent = None
-        self.color = 1
+        self.color = 1  # 1 represents red, 0 represents black
 
 class RedBlackTree:
     def __init__(self):
         self.nil = Node(None)
+        self.nil.color = 0  # Set the color of self.nil to black
         self.root = self.nil
-    
-    #insert function
+
     def insert(self, key):
         node = Node(key)
         node.left = self.nil
@@ -30,17 +30,16 @@ class RedBlackTree:
 
         node.parent = parent
 
-        if parent == None:
+        if parent == self.nil:
             self.root = node
         elif node.key < parent.key:
             parent.left = node
         else:
             parent.right = node
 
-        node.color = 0
+        node.color = 1  # Set the color of the newly inserted node to red
         self.insert_fixup(node)
 
-    #function for fixing insertion of nodes
     def insert_fixup(self, node):
         while node.parent.color == 0:
             if node.parent == node.parent.parent.left:
@@ -73,10 +72,8 @@ class RedBlackTree:
                     node.parent.color = 1
                     node.parent.parent.color = 0
                     self.left_rotate(node.parent.parent)
-
         self.root.color = 1
 
-    #performs left rotations
     def left_rotate(self, node):
         y = node.right
         node.right = y.left
@@ -86,7 +83,7 @@ class RedBlackTree:
 
         y.parent = node.parent
 
-        if node.parent == None:
+        if node.parent == self.nil:
             self.root = y
         elif node == node.parent.left:
             node.parent.left = y
@@ -96,7 +93,6 @@ class RedBlackTree:
         y.left = node
         node.parent = y
 
-    #performs right rotations
     def right_rotate(self, node):
         y = node.left
         node.left = y.right
@@ -106,7 +102,7 @@ class RedBlackTree:
 
         y.parent = node.parent
 
-        if node.parent == None:
+        if node.parent == self.nil:
             self.root = y
         elif node == node.parent.right:
             node.parent.right = y
