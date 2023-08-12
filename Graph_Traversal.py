@@ -10,13 +10,6 @@ class Edge(object):
         self.node_from = node_from
         self.node_to = node_to
 
-# You only need to change code with docs strings that have TODO.
-# Specifically: Graph.dfs_helper and Graph.bfs
-# New methods have been added to associate node numbers with names
-# Specifically: Graph.set_node_names
-# and the methods ending in "_names" which will print names instead
-# of node numbers
-
 class Graph(object):
     def __init__(self, nodes=None, edges=None):
         self.nodes = nodes or []
@@ -25,20 +18,15 @@ class Graph(object):
         self._node_map = {}
 
     def set_node_names(self, names):
-        """The Nth name in names should correspond to node number N.
-        Node numbers are 0 based (starting at 0).
-        """
         self.node_names = list(names)
 
     def insert_node(self, new_node_val):
-        "Insert a new node with value new_node_val"
         new_node = Node(new_node_val)
         self.nodes.append(new_node)
         self._node_map[new_node_val] = new_node
         return new_node
 
     def insert_edge(self, new_edge_val, node_from_val, node_to_val):
-        "Insert a new edge, creating new nodes if necessary"
         nodes = {node_from_val: None, node_to_val: None}
         for node in self.nodes:
             if node.value in nodes:
@@ -55,18 +43,15 @@ class Graph(object):
         self.edges.append(new_edge)
 
     def get_edge_list(self):
-        """Return a list of triples that looks like this:
-        (Edge Value, From Node, To Node)"""
         return [(e.value, e.node_from.value, e.node_to.value)
                 for e in self.edges]
 
     def get_edge_list_names(self):
-        """Return a list of triples that looks like this:
-        (Edge Value, From Node Name, To Node Name)"""
         return [(edge.value,
                 self.node_names[edge.node_from.value],
                 self.node_names[edge.node_to.value])
                 for edge in self.edges]
+
 
     def get_adjacency_list(self):
         """Return a list of lists.
@@ -131,107 +116,78 @@ class Graph(object):
         for node in self.nodes:
             node.visited = False
 
+
     def dfs_helper(self, start_node):
-        """TODO: Write the helper function for a recursive implementation
-        of Depth First Search iterating through a node's edges. The
-        output should be a list of numbers corresponding to the
-        values of the traversed nodes.
-        ARGUMENTS: start_node is the starting Node
-        MODIFIES: the value of the visited property of nodes in self.nodes 
-        RETURN: a list of the traversed node values (integers).
-        """
         ret_list = [start_node.value]
-        # Your code here
+        start_node.visited = True
+        for edge in start_node.edges:
+            if not edge.node_to.visited:
+                ret_list.extend(self.dfs_helper(edge.node_to))
         return ret_list
 
     def dfs(self, start_node_num):
-        """Outputs a list of numbers corresponding to the traversed nodes
-        in a Depth First Search.
-        ARGUMENTS: start_node_num is the starting node number (integer)
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the node values (integers)."""
         self._clear_visited()
         start_node = self.find_node(start_node_num)
         return self.dfs_helper(start_node)
 
     def dfs_names(self, start_node_num):
-        """Return the results of dfs with numbers converted to names."""
         return [self.node_names[num] for num in self.dfs(start_node_num)]
 
     def bfs(self, start_node_num):
-        """TODO: Create an iterative implementation of Breadth First Search
-        iterating through a node's edges. The output should be a list of
-        numbers corresponding to the traversed nodes.
-        ARGUMENTS: start_node_num is the node number (integer)
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the node values (integers)."""
-        node = self.find_node(start_node_num)
         self._clear_visited()
-        ret_list = [node.value]
-        # Your code here
+        start_node = self.find_node(start_node_num)
+        ret_list = []
+        queue = [start_node]
+        start_node.visited = True
+
+        while queue:
+            node = queue.pop(0)
+            ret_list.append(node.value)
+            for edge in node.edges:
+                if not edge.node_to.visited:
+                    queue.append(edge.node_to)
+                    edge.node_to.visited = True
+
         return ret_list
 
     def bfs_names(self, start_node_num):
-        """Return the results of bfs with numbers converted to names."""
         return [self.node_names[num] for num in self.bfs(start_node_num)]
 
 graph = Graph()
 
-# You do not need to change anything below this line.
-# You only need to implement Graph.dfs_helper and Graph.bfs
+graph.set_node_names(('Mountain View', 'San Francisco', 'London', 'Shanghai', 'Berlin', 'Sao Paolo', 'Bangalore'))
 
-graph.set_node_names(('Mountain View',   # 0
-                    'San Francisco',   # 1
-                    'London',          # 2
-                    'Shanghai',        # 3
-                    'Berlin',          # 4
-                    'Sao Paolo',       # 5
-                    'Bangalore'))      # 6 
-
-graph.insert_edge(51, 0, 1)     # MV <-> SF
-graph.insert_edge(51, 1, 0)     # SF <-> MV
-graph.insert_edge(9950, 0, 3)   # MV <-> Shanghai
-graph.insert_edge(9950, 3, 0)   # Shanghai <-> MV
-graph.insert_edge(10375, 0, 5)  # MV <-> Sao Paolo
-graph.insert_edge(10375, 5, 0)  # Sao Paolo <-> MV
-graph.insert_edge(9900, 1, 3)   # SF <-> Shanghai
-graph.insert_edge(9900, 3, 1)   # Shanghai <-> SF
-graph.insert_edge(9130, 1, 4)   # SF <-> Berlin
-graph.insert_edge(9130, 4, 1)   # Berlin <-> SF
-graph.insert_edge(9217, 2, 3)   # London <-> Shanghai
-graph.insert_edge(9217, 3, 2)   # Shanghai <-> London
-graph.insert_edge(932, 2, 4)    # London <-> Berlin
-graph.insert_edge(932, 4, 2)    # Berlin <-> London
-graph.insert_edge(9471, 2, 5)   # London <-> Sao Paolo
-graph.insert_edge(9471, 5, 2)   # Sao Paolo <-> London
-# (6) 'Bangalore' is intentionally disconnected (no edges)
-# for this problem and should produce None in the
-# Adjacency List, etc.
+graph.insert_edge(51, 0, 1)
+graph.insert_edge(51, 1, 0)
+graph.insert_edge(9950, 0, 3)
+graph.insert_edge(9950, 3, 0)
+graph.insert_edge(10375, 0, 5)
+graph.insert_edge(10375, 5, 0)
+graph.insert_edge(9900, 1, 3)
+graph.insert_edge(9900, 3, 1)
+graph.insert_edge(9130, 1, 4)
+graph.insert_edge(9130, 4, 1)
+graph.insert_edge(9217, 2, 3)
+graph.insert_edge(9217, 3, 2)
+graph.insert_edge(932, 2, 4)
+graph.insert_edge(932, 4, 2)
+graph.insert_edge(9471, 2, 5)
+graph.insert_edge(9471, 5, 2)
 
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-print ("Edge List")
+print("Edge List")
 pp.pprint(graph.get_edge_list_names())
 
-print ("\nAdjacency List")
+print("\nAdjacency List")
 pp.pprint(graph.get_adjacency_list_names())
 
-print ("\nAdjacency Matrix")
+print("\nAdjacency Matrix")
 pp.pprint(graph.get_adjacency_matrix())
 
-print ("\nDepth First Search")
-pp.print(graph.dfs_names(2))
+print("\nDepth First Search")
+pp.pprint(graph.dfs_names(2))
 
-# Should print:
-# Depth First Search
-# ['London', 'Shanghai', 'Mountain View', 'San Francisco', 'Berlin', 'Sao Paolo']
-
-print ("\nBreadth First Search")
+print("\nBreadth First Search")
 pp.pprint(graph.bfs_names(2))
-# test error reporting
-# pp.pprint(['Sao Paolo', 'Mountain View', 'San Francisco', 'London', 'Shanghai', 'Berlin'])
-
-# Should print:
-# Breadth First Search
-# ['London', 'Shanghai', 'Berlin', 'Sao Paolo', 'Mountain View', 'San Francisco']
