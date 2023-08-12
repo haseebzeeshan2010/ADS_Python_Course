@@ -64,8 +64,8 @@ class Graph(object):
         """Return a list of triples that looks like this:
         (Edge Value, From Node Name, To Node Name)"""
         return [(edge.value,
-                 self.node_names[edge.node_from.value],
-                 self.node_names[edge.node_to.value])
+                self.node_names[edge.node_from.value],
+                self.node_names[edge.node_to.value])
                 for edge in self.edges]
 
     def get_adjacency_list(self):
@@ -181,12 +181,12 @@ graph = Graph()
 # You only need to implement Graph.dfs_helper and Graph.bfs
 
 graph.set_node_names(('Mountain View',   # 0
-                      'San Francisco',   # 1
-                      'London',          # 2
-                      'Shanghai',        # 3
-                      'Berlin',          # 4
-                      'Sao Paolo',       # 5
-                      'Bangalore'))      # 6 
+                    'San Francisco',   # 1
+                    'London',          # 2
+                    'Shanghai',        # 3
+                    'Berlin',          # 4
+                    'Sao Paolo',       # 5
+                    'Bangalore'))      # 6 
 
 graph.insert_edge(51, 0, 1)     # MV <-> SF
 graph.insert_edge(51, 1, 0)     # SF <-> MV
@@ -221,7 +221,7 @@ print ("\nAdjacency Matrix")
 pp.pprint(graph.get_adjacency_matrix())
 
 print ("\nDepth First Search")
-pp.pprint(graph.dfs_names(2))
+pp.print(graph.dfs_names(2))
 
 # Should print:
 # Depth First Search
