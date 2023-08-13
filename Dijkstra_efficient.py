@@ -29,7 +29,7 @@ graph = {}
 # Create a provided number of nodes
 NODES = 5000
 
-
+# Measure the time taken by the algorithm
 start_time = time.time()
 
 # Add nodes to the graph
@@ -50,7 +50,7 @@ print("Generated Graph")
 
 start_node = "0"  # We can directly use the string "0" as the start node
 
-# Measure the time taken by the algorithm
+
 
 
 # Calculate the shortest distances from the start node
