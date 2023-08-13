@@ -26,14 +26,17 @@ def dijkstra(graph, start):
 graph = {}
 
 
+#Create a provided number of nodes
+NODES = 200
+
 # Add 200 nodes to the graph
-for i in range(200):
+for i in range(NODES):
     node = str(i)
     graph[node] = {}
 
 # Add random edges between the nodes
-for i in range(200):
-    for j in range(i+1, 200):
+for i in range(NODES):
+    for j in range(i+1, NODES):
         node1 = str(i)
         node2 = str(j)
         weight = random.randint(1, 10)  # Random weight between 1 and 10
