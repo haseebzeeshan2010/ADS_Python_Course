@@ -1,12 +1,9 @@
 import heapq
 import random
 import time
-from collections import defaultdict
 
-def dijkstra(graph, start):
-    distances = {node: float('inf') for node in graph}
-    distances[start] = 0
-
+def dijkstra(start, get_neighbors):
+    distances = {start: 0}
     queue = [(0, start)]
 
     while queue:
@@ -15,17 +12,21 @@ def dijkstra(graph, start):
         if current_distance > distances[current_node]:
             continue
 
-        for neighbor, weight in graph[current_node].items():
+        for neighbor, weight in get_neighbors(current_node):
             distance = current_distance + weight
 
-            if distance < distances[neighbor]:
+            if distance < distances.get(neighbor, float('inf')):
                 distances[neighbor] = distance
                 heapq.heappush(queue, (distance, neighbor))
 
     return distances
 
-# Create an empty graph using defaultdict
-graph = defaultdict(dict)
+def get_random_neighbors(node):
+    neighbors = []
+    for j in range(int(node) + 1, NODES):
+        weight = random.randint(1, 10)  # Random weight between 1 and 10
+        neighbors.append((str(j), weight))
+    return neighbors
 
 # Create a provided number of nodes
 NODES = 5000
@@ -33,21 +34,10 @@ NODES = 5000
 # Measure the time taken by the algorithm
 start_time = time.time()
 
-# Add random edges between the nodes
-for i in range(NODES):
-    for j in range(i + 1, NODES):
-        node1 = str(i)
-        node2 = str(j)
-        weight = random.randint(1, 10)  # Random weight between 1 and 10
-        graph[node1][node2] = weight
-        graph[node2][node1] = weight
-
-print("Generated Graph")
-
 start_node = "0"  # We can directly use the string "0" as the start node
 
 # Calculate the shortest distances from the start node
-shortest_distances = dijkstra(graph, start_node)
+shortest_distances = dijkstra(start_node, get_random_neighbors)
 
 print(shortest_distances)
 
