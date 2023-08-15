@@ -24,7 +24,7 @@ def dijkstra(start, get_neighbors):
 def get_random_neighbors(node):
     neighbors = []
     for j in range(int(node) + 1, NODES):
-        weight = random.randint(1, 10)  # Random weight between 1 and 10
+        weight = random.randint(1, 100)  # Random weight between 1 and 10
         neighbors.append((str(j), weight))
     return neighbors
 

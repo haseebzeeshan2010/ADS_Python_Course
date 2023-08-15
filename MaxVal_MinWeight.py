@@ -26,6 +26,7 @@ def max_value_dijkstra(graph, start):
 # Function to generate a random graph with a specified number of nodes and edges.
 def generate_random_graph(num_nodes, num_edges):
     graph = {str(node): {} for node in range(num_nodes)}
+    random.seed(42)
     for _ in range(num_edges):
         u = random.randint(0, num_nodes - 1)
         v = random.randint(0, num_nodes - 1)
@@ -42,6 +43,8 @@ start_node = '0'  # Start from node 0
 graph = generate_random_graph(num_nodes, num_edges)
 shortest_distances = max_value_dijkstra(graph, start_node)
 
+# Convert distances dictionary to a more readable format.
+output_dict = {node: {"distance": distance} for node, distance in shortest_distances.items()}
+
 print("Shortest distances from", start_node, "to all nodes:")
-for node, distance in shortest_distances.items():
-    print(node, ":", distance)
+print(output_dict)
