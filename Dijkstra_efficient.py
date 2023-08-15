@@ -29,7 +29,7 @@ def get_random_neighbors(node):
     return neighbors
 
 # Create a provided number of nodes
-NODES = 5
+NODES = 5000
 
 # Measure the time taken by the algorithm
 start_time = time.time()

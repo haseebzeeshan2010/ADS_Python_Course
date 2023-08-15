@@ -35,7 +35,7 @@ def generate_random_graph(num_nodes, num_edges):
             graph[str(u)][str(v)] = weight
     return graph
 
-num_nodes = 5
+num_nodes = 5000
 num_edges = 10000
 start_node = '0'  # Start from node 0
 
