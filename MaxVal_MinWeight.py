@@ -1,50 +1,43 @@
 import heapq
-import random
 
-def max_value_dijkstra(graph, start):
+def max_value_for_min_weight(graph, start):
+    # Initialize distances to all nodes as negative infinity
     distances = {node: float('-inf') for node in graph}
-    distances[start] = float('inf')
+    # Set the distance of the start node to 0
+    distances[start] = 0
 
-    priority_queue = [(float('-inf'), start)]
-    heapq.heapify(priority_queue)
+    # Priority queue to store nodes and their associated distances
+    pq = [(0, start)]
 
-    while priority_queue:
-        neg_distance, node = heapq.heappop(priority_queue)
-        distance = -neg_distance
+    while pq:
+        current_distance, current_node = heapq.heappop(pq)
 
-        if distance < distances[node]:
+        # Skip if the current distance is less than the stored distance
+        if current_distance < distances[current_node]:
             continue
 
-        for neighbor, weight in graph[node].items():
-            new_distance = min(distance, weight)
-            if new_distance > distances[neighbor]:
-                distances[neighbor] = new_distance
-                heapq.heappush(priority_queue, (-new_distance, neighbor))
+        for neighbor, (weight, value) in graph[current_node].items():
+            # Calculate the new combined value-weight ratio
+            new_ratio = (distances[current_node] + value) / weight
+
+            # If the new ratio is greater than the stored ratio, update the values
+            if new_ratio > distances[neighbor]:
+                distances[neighbor] = new_ratio
+                heapq.heappush(pq, (new_ratio, neighbor))
 
     return distances
 
-# Function to generate a random graph with a specified number of nodes and edges.
-def generate_random_graph(num_nodes, num_edges):
-    graph = {str(node): {} for node in range(num_nodes)}
-    random.seed(42)
-    for _ in range(num_edges):
-        u = random.randint(0, num_nodes - 1)
-        v = random.randint(0, num_nodes - 1)
-        weight = random.randint(1, 100)
-        if u != v and v not in graph[str(u)]:
-            graph[str(u)][str(v)] = weight
-    return graph
+# Example graph represented as an adjacency dictionary
+graph = {
+    'A': {'B': (2, 5), 'C': (1, 10)},
+    'B': {'C': (3, 2), 'D': (4, 8)},
+    'C': {'D': (2, 4)},
+    'D': {'E': (3, 6)},
+    'E': {}
+}
 
-num_nodes = 5000
-num_edges = 10000
-start_node = '0'  # Start from node 0
-
-# Generate random graph and calculate shortest distances using max_value_dijkstra.
-graph = generate_random_graph(num_nodes, num_edges)
-shortest_distances = max_value_dijkstra(graph, start_node)
-
-# Convert distances dictionary to a more readable format.
-output_dict = {node: {"distance": distance} for node, distance in shortest_distances.items()}
-
-print("Shortest distances from", start_node, "to all nodes:")
-print(output_dict)
+start_node = 'A'
+shortest_distances = max_value_for_min_weight(graph, start_node)
+print("Shortest distances from node", start_node)
+for node, distance in shortest_distances.items():
+    print(node, "-", distance)
